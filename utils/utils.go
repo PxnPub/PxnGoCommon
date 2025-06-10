@@ -2,6 +2,7 @@ package utils;
 
 import(
 	Time "time"
+	Rand "math/rand"
 );
 
 
@@ -19,4 +20,10 @@ func SleepC() {
 func SleepS() {
 	sleep, err := Time.ParseDuration("1s");
 	if err == nil { Time.Sleep(sleep); }
+}
+
+func SleepR() {
+	Rand.Seed(Time.Now().UnixNano());
+	n := Rand.Intn(77) + 1;
+	Time.Sleep(Time.Duration(n) * Time.Millisecond);
 }
