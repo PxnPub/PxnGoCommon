@@ -15,12 +15,13 @@ import(
 
 
 type Service struct {
-	WaitGroup *Sync.WaitGroup
-	StopChans ThdSafe.Slice[chan bool]
-	StopHooks ThdSafe.Slice[StopHook]
-	Stopping  Atomic.Bool
-	State     ServiceState
-	Timeout   int8
+	WaitGroup  *Sync.WaitGroup
+	StopChans  ThdSafe.Slice[chan bool]
+	StopHooks  ThdSafe.Slice[StopHook]
+	Closeables ThdSafe.Slice[Closeable]
+	Stopping   Atomic.Bool
+	State      ServiceState
+	Timeout    int8
 }
 
 type StopHook func();
@@ -38,6 +39,10 @@ const (
 
 type App interface{
 	Main()
+}
+
+type Closeable interface{
+	Close()
 }
 
 
@@ -106,17 +111,39 @@ func (service *Service) TrapC() {
 
 func (service *Service) Stop() {
 	service.Stopping.Store(true);
-	for ; service.StopHooks.Length()>0; {
-		stopchan, ok := service.StopChans.Get(0);
-		if !ok { break; }
-		service.StopChans.Remove(0);
-		stopchan <-true;
-	}
-	for ; service.StopHooks.Length()>0; {
-		hook, ok := service.StopHooks.Get(0);
-		if !ok { break; }
-		service.StopHooks.Remove(0);
-		hook();
+	var finished bool;
+	LOOP_STOP:
+	for {
+		finished = true;
+		// chan
+		LOOP_STOPCHANS:
+		for ; service.StopChans.Length()>0; {
+			stopchan, ok := service.StopChans.Get(0);
+			if !ok { break LOOP_STOPCHANS; }
+			finished = false;
+			service.StopChans.Remove(0);
+			stopchan <-true;
+		}
+		// Close()
+		LOOP_CLOSEABLES:
+		for ; service.Closeables.Length()>0; {
+			closeable, ok := service.Closeables.Get(0);
+			if !ok { break LOOP_CLOSEABLES; }
+			finished = false;
+			service.Closeables.Remove(0);
+			closeable.Close();
+		}
+		// func()
+		LOOP_STOPHOOKS:
+		for ; service.StopHooks.Length()>0; {
+			hook, ok := service.StopHooks.Get(0);
+			if !ok { break LOOP_STOPHOOKS; }
+			finished = false;
+			service.StopHooks.Remove(0);
+			hook();
+		}
+		if finished { break LOOP_STOP; }
+		Utils.SleepC();
 	}
 }
 
@@ -152,5 +179,13 @@ func (service *Service) AddStopHook(hook StopHook) {
 		hook();
 	} else {
 		service.StopHooks.Append(hook);
+	}
+}
+
+func (service *Service) AddCloseable(closeable Closeable) {
+	if service.Stopping.Load() {
+		closeable.Close();
+	} else {
+		service.Closeables.Append(closeable);
 	}
 }
