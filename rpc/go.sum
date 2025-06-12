@@ -1,7 +1,7 @@
-github.com/PxnPub/PxnGoCommon/service v0.0.0-20250612204645-0fba9de2654b h1:9Uu2KwolhLsh1nSauSB7xCtVHKZwVS5gfVGVz6g2KBE=
-github.com/PxnPub/PxnGoCommon/service v0.0.0-20250612204645-0fba9de2654b/go.mod h1:Ghvywt4+U3RSzF1mip55aOvXwb3e66cr0JRQve84ZSU=
-github.com/PxnPub/PxnGoCommon/utils v0.0.0-20250612204645-0fba9de2654b h1:MvFZ1wS284m2xnOjR1EKT13yZVKpYjz+520OB8PL/YY=
-github.com/PxnPub/PxnGoCommon/utils v0.0.0-20250612204645-0fba9de2654b/go.mod h1:LCv7xSR+Ok9CorRURm7pAsSMSorpK9VL733CGq8BcBg=
+github.com/PxnPub/PxnGoCommon/service v0.0.0-20250612205418-df70c592a862 h1:BxxjZlqo6PHsVURkIIBurkKNQpMbG/kx35unueCzsV4=
+github.com/PxnPub/PxnGoCommon/service v0.0.0-20250612205418-df70c592a862/go.mod h1:yKTuWikGwRjLM7QGSA2nWc8apvTdakJhBJXpeohn/6w=
+github.com/PxnPub/PxnGoCommon/utils v0.0.0-20250612205418-df70c592a862 h1:TcbtLdpot1m90BysrQzY/7l5GWcUvVxA3Zh1BtiFBTM=
+github.com/PxnPub/PxnGoCommon/utils v0.0.0-20250612205418-df70c592a862/go.mod h1:LCv7xSR+Ok9CorRURm7pAsSMSorpK9VL733CGq8BcBg=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/go-logr/logr v1.4.2 h1:6pFjapn8bFcIbiKo3XT4j/BhANplGihG6tvd+8rYgrY=
