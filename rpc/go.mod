@@ -3,8 +3,8 @@ module github.com/PxnPub/PxnGoCommon/rpc
 go 1.24.4
 
 require (
-	github.com/PxnPub/PxnGoCommon/service v0.0.0-20250612185839-aefcc0611ce7
-	github.com/PxnPub/PxnGoCommon/utils v0.0.0-20250612185839-aefcc0611ce7
+	github.com/PxnPub/PxnGoCommon/service v0.0.0-20250612204645-0fba9de2654b
+	github.com/PxnPub/PxnGoCommon/utils v0.0.0-20250612204645-0fba9de2654b
 	google.golang.org/grpc v1.73.0
 )
 
