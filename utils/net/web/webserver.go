@@ -110,6 +110,13 @@ func (web *WebServer) PageNotFound(w HTTP.ResponseWriter, r *HTTP.Request) {
 
 
 
+func AddStaticRoute(router *Gorilla.Router) {
+	fs := HTTP.FileServer(HTTP.Dir("./static"));
+	router.PathPrefix("/static/").Handler(HTTP.StripPrefix("/static/", fs));
+}
+
+
+
 //func (web *WebServer) GetStats() *Stats {
 //	type StatsRPC struct {
 //		CountConns uint64
