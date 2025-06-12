@@ -3,7 +3,7 @@ module github.com/PxnPub/PxnGoCommon/service
 go 1.24.4
 
 require (
-	github.com/PxnPub/PxnGoCommon/utils v0.0.0-20250612181635-943ed4e6f56e
+	github.com/PxnPub/PxnGoCommon/utils v0.0.0-20250612181756-4141b018c6e0
 	github.com/hayageek/threadsafe v1.0.1
 )
 
