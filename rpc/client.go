@@ -2,13 +2,15 @@ package rpc;
 
 import(
 	Log      "log"
+	Fmt      "fmt"
 	Sync     "sync"
 	Errors   "errors"
 	GRPC     "google.golang.org/grpc"
 	GRPC_Ins "google.golang.org/grpc/credentials/insecure"
+	Service  "github.com/PxnPub/PxnGoCommon/service"
 	UtilsNet "github.com/PxnPub/PxnGoCommon/utils/net"
 	UtilsSan "github.com/PxnPub/PxnGoCommon/utils/san"
-	Service  "github.com/PxnPub/PxnGoCommon/service"
+	Utils    "github.com/PxnPub/PxnGoCommon/utils"
 );
 
 
@@ -65,6 +67,6 @@ panic("UNFINISHED UNIX RPC CLIENT");
 	return Fmt.Errorf("Unknown protocol: %s", protocol);
 }
 
-func (client *Client) Close() error {
+func (client *Client) Close() {
 //TODO
 }

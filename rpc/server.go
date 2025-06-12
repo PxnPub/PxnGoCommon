@@ -2,13 +2,16 @@ package rpc;
 
 import(
 	Log      "log"
+	Fmt      "fmt"
+	Net      "net"
 	Sync     "sync"
 	Errors   "errors"
 	GRPC     "google.golang.org/grpc"
 	GRPC_Ins "google.golang.org/grpc/credentials/insecure"
+	Service  "github.com/PxnPub/PxnGoCommon/service"
 	UtilsNet "github.com/PxnPub/PxnGoCommon/utils/net"
 	UtilsSan "github.com/PxnPub/PxnGoCommon/utils/san"
-	Service  "github.com/PxnPub/PxnGoCommon/service"
+	Utils    "github.com/PxnPub/PxnGoCommon/utils"
 );
 
 
@@ -38,7 +41,7 @@ func (server *Server) Start() error {
 	defer server.MuxState.Unlock();
 	if server.Bind == "" { return Errors.New("Bind address is required"); }
 	Log.Printf("%sStarting RPC Server.. %s", LogPrefix, server.Bind);
-	protocol, address, port := UtilsNet.SplitProtocolAddressPort(server.Remote);
+	protocol, address, port := UtilsNet.SplitProtocolAddressPort(server.Bind);
 	if protocol == "" { return Errors.New("protocol is required"); }
 	switch protocol {
 	case "unix":
