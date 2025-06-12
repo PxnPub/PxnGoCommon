@@ -31,6 +31,7 @@ func NewServer(service *Service.Service, bind string) *Server {
 	return &Server{
 		Service: service,
 		Bind:    bind,
+		RPC:     GRPC.NewServer(),
 	};
 }
 
@@ -60,7 +61,6 @@ panic("UNFINISHED UNIX RPC SERVER");
 		server.Service.AddStopHook(func() {
 			server.Listen.Close();
 		});
-		server.RPC = GRPC.NewServer();
 print("AAAAA\n");
 server.RPC.Serve(listen);
 print("BBBBB\n");
