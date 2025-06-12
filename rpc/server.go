@@ -7,7 +7,6 @@ import(
 	Sync     "sync"
 	Errors   "errors"
 	GRPC     "google.golang.org/grpc"
-	GRPC_Ins "google.golang.org/grpc/credentials/insecure"
 	Service  "github.com/PxnPub/PxnGoCommon/service"
 	UtilsNet "github.com/PxnPub/PxnGoCommon/utils/net"
 	UtilsSan "github.com/PxnPub/PxnGoCommon/utils/san"
@@ -23,6 +22,7 @@ type Server struct {
 	Bind   string
 	UseTLS bool
 	Listen Net.Listener
+	RPC    *GRPC.Server
 }
 
 
@@ -54,7 +54,6 @@ panic("UNFINISHED UNIX RPC SERVER");
 		} else {         Log.Printf("%sTLS Disabled", LogPrefix); }
 		if !UtilsSan.IsSafeDomain(address) { return Fmt.Errorf("Invalid address: %s", address); }
 		if port == 0                       { return Fmt.Errorf("Invalid port: %d"); }
-		addrport := Fmt.Sprintf("%s:%d", address, port);
 		listen, err := UtilsNet.NewServerSocket(server.Bind);
 		if err != nil { return Fmt.Errorf("%s failed to listen", err); }
 		server.Listen = listen;
