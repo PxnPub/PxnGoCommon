@@ -1,6 +1,8 @@
 package rpc;
 
 import(
+	Log     "log"
+	Fmt     "fmt"
 	Net     "net"
 	Context "context"
 	GRPC    "google.golang.org/grpc"
@@ -23,6 +25,7 @@ func NewAuthByIP(users map[string]string) GRPC.UnaryServerInterceptor {
 		}
 		peer, ok := GPeer.FromContext(ctx);
 		if !ok {
+			Log.Printf("%sUnable to find peer info", LogPrefix);
 			return nil, GStatus.Errorf(
 				GCodes.PermissionDenied,
 				"Unable to find peer info",
@@ -30,15 +33,15 @@ func NewAuthByIP(users map[string]string) GRPC.UnaryServerInterceptor {
 		}
 		remote := peer.Addr.String();
 		if addr, _, err := Net.SplitHostPort(remote); err == nil {
-			remote = addr;
-		}
+			if addr != "" { remote = addr; }}
 		if username, ok := users[remote]; ok {
 			ctx = Context.WithValue(ctx, KeyUsername, username);
 			return handler(ctx, req);
 		}
+		Log.Printf("%sIP not allowed: %s", LogPrefix, remote);
 		return nil, GStatus.Errorf(
 			GCodes.PermissionDenied,
-			"IP %s is not allowed",
+			Fmt.Sprintf("IP not allowed: %s", remote),
 		);
 	};
 }
