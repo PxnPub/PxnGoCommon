@@ -12,7 +12,7 @@ func (uid UID64) Value() (Driver.Value, error) {
 }
 
 func (uid *UID64) Scan(src interface{}) error {
-	switch t := t.(type) {
+	switch t := src.(type) {
 	case nil: return nil;
 	case uint64:
 		val, err := FromInt(t);

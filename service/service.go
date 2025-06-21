@@ -15,13 +15,14 @@ import(
 
 
 type Service struct {
-	WaitGroup  *Sync.WaitGroup
-	StopChans  ThdSafe.Slice[chan bool]
-	StopHooks  ThdSafe.Slice[StopHook]
-	Closeables ThdSafe.Slice[Closeable]
-	Stopping   Atomic.Bool
-	State      ServiceState
-	Timeout    int8
+	WaitGroup   *Sync.WaitGroup
+	StopChans   ThdSafe.Slice[chan bool]
+	StopHooks   ThdSafe.Slice[StopHook]
+	Closeables  ThdSafe.Slice[Closeable]
+	CloseablesE ThdSafe.Slice[CloseableE]
+	Stopping    Atomic.Bool
+	State       ServiceState
+	Timeout     int8
 }
 
 type StopHook func();
@@ -37,12 +38,16 @@ const (
 
 
 
-type App interface{
+type AppFace interface{
 	Main()
 }
 
 type Closeable interface{
 	Close()
+}
+
+type CloseableE interface{
+	Close() error
 }
 
 
@@ -133,6 +138,15 @@ func (service *Service) Stop() {
 			service.Closeables.Remove(0);
 			closeable.Close();
 		}
+		// Close() error
+		LOOP_CLOSEABLES_E:
+		for ; service.CloseablesE.Length()>0; {
+			closeable, ok := service.CloseablesE.Get(0);
+			if !ok { break LOOP_CLOSEABLES_E; }
+			finished = false;
+			service.CloseablesE.Remove(0);
+			closeable.Close();
+		}
 		// func()
 		LOOP_STOPHOOKS:
 		for ; service.StopHooks.Length()>0; {
@@ -182,10 +196,20 @@ func (service *Service) AddStopHook(hook StopHook) {
 	}
 }
 
-func (service *Service) AddCloseable(closeable Closeable) {
+func (service *Service) AddClose(closeable Closeable) {
 	if service.Stopping.Load() {
 		closeable.Close();
 	} else {
 		service.Closeables.Append(closeable);
+	}
+}
+
+func (service *Service) AddCloseE(closeable CloseableE) {
+	if service.Stopping.Load() {
+		if err := closeable.Close(); err != nil {
+			Log.Printf("%s", err);
+		}
+	} else {
+		service.CloseablesE.Append(closeable);
 	}
 }

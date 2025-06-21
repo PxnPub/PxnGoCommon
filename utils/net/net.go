@@ -2,7 +2,9 @@ package net;
 
 import(
 	OS       "os"
+	Log      "log"
 	Fmt      "fmt"
+	Net      "net"
 	Strings  "strings"
 	StrConv  "strconv"
 	UtilsSan "github.com/PxnPub/PxnGoCommon/utils/san"
@@ -20,12 +22,12 @@ func SplitProtocolAddressPort(bind string) (string, string, uint16) {
 		address  = parts[1];
 	}
 	if Strings.Contains(address, ":") {
-		parts := Strings.SplitN(address, ":", 2);
-		address = parts[0];
-		p, err := StrConv.Atoi(parts[1]);
-		if err != nil { panic(err); }
+		hst, prt, err := Net.SplitHostPort(address);
+		if err != nil { Log.Panic(err); }
+		p, err := StrConv.Atoi(prt);
+		if err != nil { Log.Panic(err); }
+		address = hst;
 		port = uint16(p);
-
 	}
 	return protocol, address, port;
 }

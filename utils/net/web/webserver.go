@@ -7,7 +7,9 @@ import(
 	HTTP     "net/http"
 	Time     "time"
 	Sync     "sync"
-	Atomic   "sync/atomic"
+//	Atomic   "sync/atomic"
+	Context  "context"
+	Errors   "errors"
 	Gorilla  "github.com/gorilla/mux"
 	Utils    "github.com/PxnPub/PxnGoCommon/utils"
 	UtilsNet "github.com/PxnPub/PxnGoCommon/utils/net"
@@ -22,81 +24,73 @@ const DefaultBindWeb = "tcp://127.0.0.1:8000";
 
 
 type WebServer struct {
-	MuxState   Sync.Mutex
-	Service    *Service.Service
-	Bind       string
-	Listen     Net.Listener
-	Router     *Gorilla.Router
-	Stats      *Stats
-	NextIndex  Atomic.Uint64
-	NumReqs    Atomic.Uint64
-	Sessions   map[uint64]Net.Conn
+	MutState Sync.Mutex
+	Service  *Service.Service
+	// transport
+	Bind   string
+	UseTLS bool
+	Listen Net.Listener
+	Router *Gorilla.Router
+	Server *HTTP.Server
 }
 
 
 
-type Stats struct {
-	CountConns uint64
-	CountReqs  uint64
-}
-
-
-
-func NewWebServer(bind string) *WebServer {
+func NewWebServer(service *Service.Service, bind string) *WebServer {
 	web := WebServer{
-		Bind:   bind,
-		Router: Gorilla.NewRouter(),
+		Service: service,
+		Bind:    bind,
+		Router:  Gorilla.NewRouter(),
+		Server:  &HTTP.Server{},
 	};
 	web.Router.NotFoundHandler = HTTP.HandlerFunc(web.PageNotFound);
 	web.Router.Use(web.MiddlewareStats);
 	return &web;
 }
 
+
+
 func (web *WebServer) Start() error {
-	web.MuxState.Lock();
-	defer web.MuxState.Unlock();
+	web.MutState.Lock();
+	defer web.MutState.Unlock();
 	if web.Bind == "" { web.Bind = DefaultBindWeb; }
+	if web.Bind == "" { return Errors.New("Bind address is required"); }
 	listen, err := UtilsNet.NewServerSocket(web.Bind);
 	if err != nil { return Fmt.Errorf(
-		"%s%s for NewServerSocket in NewWebServer",
-		LogPrefix, err); }
+		"%s for NewServerSocket() in WebServer->Start()", err); }
 	web.Listen = listen;
 	go web.Serve();
 	Utils.SleepC();
 	return nil;
 }
 
-func (web *WebServer) Close() {
-	web.MuxState.Lock();
-	defer web.MuxState.Unlock();
-	if web.Listen != nil {
-		web.Listen.Close();
-		web.Listen = nil;
-	}
+func (web *WebServer) Serve() {
+	web.Service.WaitGroup.Add(1);
+	defer func() {
+		web.Close();
+		web.Service.WaitGroup.Done();
+	}();
+	web.Service.AddCloseE(web);
+	Log.Printf("Starting Web Server.. %s", web.Bind);
+	web.Server.Handler = web.Router;
+	if err := web.Server.Serve(web.Listen); err != nil {
+		Log.Printf("%s, in WebServer->Serve()", err); }
 }
 
-func (web *WebServer) CloseAll() {
-	web.MuxState.Lock();
-	defer web.MuxState.Unlock();
-//TODO
-}
 
 
-
-func (web *WebServer) Serve() error {
+func (web *WebServer) Close() error {
 	web.Service.WaitGroup.Add(1);
 	defer web.Service.WaitGroup.Done();
-	web.Service.AddStopHook(func() {
-		web.MuxState.Lock();
-		defer web.MuxState.Unlock();
-		if web.Listen != nil {
-			web.Listen.Close();
-			web.Listen = nil;
-			Utils.SleepX();
-		}
-	});
-	Log.Printf("Starting WebServer.. %s", web.Bind);
-	return HTTP.Serve(web.Listen, web.Router);
+	web.MutState.Lock();
+	defer web.MutState.Unlock();
+	var e error = nil;
+	if web.Listen != nil {
+		if err := web.Listen.Close(); err != nil { e = err; }
+		web.Listen = nil;
+	}
+	if err := web.Server.Shutdown(Context.Background()); err != nil { e = err; }
+	return e;
 }
 
 
@@ -129,3 +123,11 @@ func AddStaticRoute(router *Gorilla.Router) {
 //		CountReqs  uint64
 //	}
 //}
+
+
+
+func NewRedirect(target string) HTTP.HandlerFunc  {
+	return func(out HTTP.ResponseWriter, in *HTTP.Request) {
+		HTTP.Redirect(out, in, target, HTTP.StatusFound);
+	};
+}
