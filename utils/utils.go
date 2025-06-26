@@ -22,10 +22,22 @@ func SleepC() {
 	sleep, err := Time.ParseDuration("100ms");
 	if err == nil { Time.Sleep(sleep); }
 }
+func SleepCn(n uint8) {
+	sleep, err := Time.ParseDuration("100ms");
+	if err == nil {
+		for i:=uint8(0); i<n; i++ {
+			Time.Sleep(sleep); }}
+}
 
 func SleepS() {
 	sleep, err := Time.ParseDuration("1s");
 	if err == nil { Time.Sleep(sleep); }
+}
+func SleepSn(n uint8) {
+	sleep, err := Time.ParseDuration("1s");
+	if err == nil {
+		for i:=uint8(0); i<n; i++ {
+			Time.Sleep(sleep); }}
 }
 
 func SleepR() {
