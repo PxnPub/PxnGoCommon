@@ -1,11 +1,11 @@
 github.com/PoiXson/pxnGoCommon/service v0.0.0-20250705183951-395e3bc76525 h1:BqMPrn5G4Sf9C5FNIXuDHlXmsLefNudISxMxn4dOEkI=
 github.com/PoiXson/pxnGoCommon/service v0.0.0-20250705183951-395e3bc76525/go.mod h1:XsA+fxeK5Tw7iF/fx1/rEHCUrdUFymAjSf3SlP8z3UM=
-github.com/PoiXson/pxnGoCommon/utils v0.0.0-20250705183951-395e3bc76525 h1:V2pwjTqGFaXcu+DqavDXAq5V1KlJ/5XXCtJaO7njagU=
-github.com/PoiXson/pxnGoCommon/utils v0.0.0-20250705183951-395e3bc76525/go.mod h1:63+q5tY1gKOPMKcowUgS91M7M2oUMD4det8M3ygvWV8=
+github.com/PoiXson/pxnGoCommon/utils v0.0.0-20250705204640-efe1c34b7e0e h1:zfXAcPNQReSVxG5jRqoeRfwqwADSaq1XDBFcmZhSC2w=
+github.com/PoiXson/pxnGoCommon/utils v0.0.0-20250705204640-efe1c34b7e0e/go.mod h1:63+q5tY1gKOPMKcowUgS91M7M2oUMD4det8M3ygvWV8=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
-github.com/felixge/httpsnoop v1.0.3 h1:s/nj+GCswXYzN5v2DpNMuMQYe+0DDwt5WVCU6CWBdXk=
-github.com/felixge/httpsnoop v1.0.3/go.mod h1:m8KPJKqk1gH5J9DgRY2ASl2lWCfGKXixSwevea8zH2U=
+github.com/felixge/httpsnoop v1.0.4 h1:NFTV2Zj1bL4mc9sqWACXbQFVBBg2W3GPvqp8/ESS2Wg=
+github.com/felixge/httpsnoop v1.0.4/go.mod h1:m8KPJKqk1gH5J9DgRY2ASl2lWCfGKXixSwevea8zH2U=
 github.com/golang-collections/collections v0.0.0-20130729185459-604e922904d3 h1:zN2lZNZRflqFyxVaTIU61KNKQ9C0055u9CAfpmqUvo4=
 github.com/golang-collections/collections v0.0.0-20130729185459-604e922904d3/go.mod h1:nPpo7qLxd6XL3hWJG/O60sR8ZKfMCiIoNap5GvD12KU=
 github.com/gorilla/handlers v1.5.2 h1:cLTUSsNkgcwhgRqvCNmdbRWG0A3N4F+M2nWKdScwyEE=

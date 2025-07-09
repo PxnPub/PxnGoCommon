@@ -1,5 +1,6 @@
 {
 	"DataTables/Dist-DataTables-Bootstrap5": "2.3.2",
+	"DataTables/Dist-DataTables-Scroller-Bootstrap5": "2.4.3",
 	"apache/echarts": "5.6.0",
 	"floating-ui/floating-ui": "2.11.8",
 	"jquery/jquery": "3.7.1",

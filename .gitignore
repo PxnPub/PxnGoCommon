@@ -1,3 +1,5 @@
+includes-updater/includes-updater
+
 .git/
 .svn/
 .hg/

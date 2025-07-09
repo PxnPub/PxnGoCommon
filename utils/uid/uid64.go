@@ -1,7 +1,7 @@
 package uid;
 
 import(
-	UtilsNum "github.com/PoiXson/pxnGoCommon/utils/num"
+	PxnNum "github.com/PoiXson/pxnGoCommon/utils/num"
 );
 
 
@@ -15,12 +15,12 @@ type UID64 uint64;
 
 // to/from string
 func Parse(str string) (UID64, error) {
-	uid, err := UtilsNum.FromBase36(str);
+	uid, err := PxnNum.FromBase36(str);
 	return UID64(uid), err;
 }
 
 func (uid UID64) ToString() string {
-	return UtilsNum.ToBase36(uint64(uid));
+	return PxnNum.ToBase36(uint64(uid));
 }
 
 

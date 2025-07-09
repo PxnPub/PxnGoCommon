@@ -17,18 +17,20 @@ const(
 
 
 
-// html tags
+// template tags
 const(
 	Tag_Title          = "Title"
 	Tag_Page           = "Page"
 	Tag_FavIcon        = "FavIcon"
 	Tag_FilesCSS       = "FilesCSS"
+	Tag_FilesJS        = "FilesJS"
 	Tag_RawCSS         = "RawCSS"
+	Tag_RawJS          = "RawJS"
 	// bootstrap
 	Tag_WithBootstrap  = "WithBootstrap"
-	Tag_WithBootsIcons = "WithBootstrapIcons"
+	Tag_WithBootsIcons = "WithBootsIcons"
 	Tag_WithTooltips   = "WithTooltips"
-	Tag_WithFloatingUI = "WithBootstrapPopper"
+	Tag_WithPopper     = "WithPopper"
 	// jquery
 	Tag_WithJQuery     = "WithJQuery"
 	// datatables
@@ -45,17 +47,17 @@ const(
 	// bootstrap
 	URL_BootstrapCSS           = "https://cdn.jsdelivr.net/npm/bootstrap@{{VERSION}}/dist/css/bootstrap.min.css";
 	URL_BootstrapJS            = "https://cdn.jsdelivr.net/npm/bootstrap@{{VERSION}}/dist/js/bootstrap.bundle.min.js";
-	URL_BootsIconsCSS          = "https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css";
-	URL_FloatingJS             = "https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js";
+	URL_BootsIconsCSS          = "https://cdn.jsdelivr.net/npm/bootstrap-icons@{{VERSION}}/font/bootstrap-icons.min.css";
+	URL_PopperJS               = "https://cdn.jsdelivr.net/npm/@popperjs/core@{{VERSION}}/dist/umd/popper.min.js";
 	// jquery
-	URL_JQueryJS               = "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js";
+	URL_JQueryJS               = "https://cdnjs.cloudflare.com/ajax/libs/jquery/{{VERSION}}/jquery.min.js";
 	// datatables
-	URL_DataTablesJS           = "https://cdn.datatables.net/2.3.1/js/dataTables.min.js";
-	URL_DataTablesBootstrapJS  = "https://cdn.datatables.net/2.3.1/js/dataTables.bootstrap5.min.js";
-	URL_DataTablesBootstrapCSS = "https://cdn.datatables.net/2.3.1/css/dataTables.bootstrap5.min.css";
-	URL_DataTablesScrollerJS   = "https://cdn.datatables.net/scroller/2.4.3/js/dataTables.scroller.min.js";
-	URL_DataTablesScrollerCSS  = "https://cdn.datatables.net/scroller/2.4.3/css/scroller.bootstrap5.min.css";
-	URL_DataTablesPageResizeJS = "https://cdn.datatables.net/plug-ins/2.3.1/features/pageResize/dataTables.pageResize.min.js";
+	URL_DataTablesJS           = "https://cdn.datatables.net/{{VERSION}}/js/dataTables.min.js";
+	URL_DataTablesBootstrapJS  = "https://cdn.datatables.net/{{VERSION}}/js/dataTables.bootstrap5.min.js";
+	URL_DataTablesBootstrapCSS = "https://cdn.datatables.net/{{VERSION}}/css/dataTables.bootstrap5.min.css";
+	URL_DataTablesScrollerJS   = "https://cdn.datatables.net/scroller/{{VERSION}}/js/dataTables.scroller.min.js";
+	URL_DataTablesScrollerCSS  = "https://cdn.datatables.net/scroller/{{VERSION}}/css/scroller.bootstrap5.min.css";
+	URL_DataTablesPageResizeJS = "https://cdn.datatables.net/plug-ins/{{VERSION}}/features/pageResize/dataTables.pageResize.min.js";
 	// echarts
-	URL_EChartsJS              = "https://cdnjs.cloudflare.com/ajax/libs/echarts/5.6.0/echarts.min.js"
+	URL_EChartsJS              = "https://cdnjs.cloudflare.com/ajax/libs/echarts/{{VERSION}}/echarts.min.js"
 );

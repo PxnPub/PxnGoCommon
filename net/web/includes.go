@@ -25,7 +25,7 @@ func (build *Builder) WithIncludes() *Builder {
 	build.AddTagURL("URL_BootstrapCSS",           URL_BootstrapCSS,           versions["twbs/bootstrap"]);
 	build.AddTagURL("URL_BootstrapJS",            URL_BootstrapJS,            versions["twbs/bootstrap"]);
 	build.AddTagURL("URL_BootsIconsCSS",          URL_BootsIconsCSS,          versions["twbs/icons"    ]);
-	build.AddTagURL("URL_FloatingJS",             URL_FloatingJS,    versions["floating-ui/floating-ui"]);
+	build.AddTagURL("URL_PopperJS",               URL_PopperJS,      versions["floating-ui/floating-ui"]);
 	// jquery
 	build.AddTagURL("URL_JQueryJS",               URL_JQueryJS,               versions["jquery/jquery" ]);
 	// datatables
@@ -48,10 +48,10 @@ func (build *Builder) AddTagURL(key string, url string, version string) {
 
 
 
-func (build *Builder) WithBootstrap()  *Builder { build.Tags[Tag_WithBootstrap]  = true; return build;                  }
+func (build *Builder) WithBootstrap()  *Builder { build.Tags[Tag_WithBootstrap ] = true; return build;                  }
 func (build *Builder) WithBootsIcons() *Builder { build.Tags[Tag_WithBootsIcons] = true; return build.WithBootstrap();  }
-func (build *Builder) WithFloatingUI() *Builder { build.Tags[Tag_WithFloatingUI] = true; return build.WithBootstrap();  }
-func (build *Builder) WithTooltips()   *Builder { build.Tags[Tag_WithTooltips]   = true; return build.WithFloatingUI(); }
-func (build *Builder) WithJQuery()     *Builder { build.Tags[Tag_WithJQuery]     = true; return build;                  }
+func (build *Builder) WithPopper()     *Builder { build.Tags[Tag_WithPopper    ] = true; return build.WithBootstrap();  }
+func (build *Builder) WithTooltips()   *Builder { build.Tags[Tag_WithTooltips  ] = true; return build.WithPopper();     }
+func (build *Builder) WithJQuery()     *Builder { build.Tags[Tag_WithJQuery    ] = true; return build;                  }
 func (build *Builder) WithDataTables() *Builder { build.Tags[Tag_WithDataTables] = true; return build.WithBootstrap();  }
-func (build *Builder) WithECharts()    *Builder { build.Tags[Tag_WithECharts]    = true; return build;                  }
+func (build *Builder) WithECharts()    *Builder { build.Tags[Tag_WithECharts   ] = true; return build;                  }
